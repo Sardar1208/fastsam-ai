@@ -16,6 +16,8 @@ from ultralytics.yolo.utils import DEFAULT_CFG, LOGGER, ROOT, is_git_dir
 from ultralytics.yolo.utils.checks import check_imgsz
 
 from ultralytics.yolo.utils.torch_utils import model_info, smart_inference_mode
+from torch.serialization import add_safe_globals
+from ultralytics.nn.tasks import SegmentationModel
 from .predict import FastSAMPredictor
 
 

@@ -6,4 +6,5 @@
 weights
 build/
 *.egg-info/
+*.pt
 gradio_cached_examples

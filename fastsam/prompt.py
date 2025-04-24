@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')
 import os
 import sys
 import cv2
@@ -6,6 +8,8 @@ import numpy as np
 import torch
 from .utils import image_to_np_ndarray
 from PIL import Image
+
+
 
 
 class FastSAMPrompt:

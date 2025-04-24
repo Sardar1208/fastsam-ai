@@ -5,6 +5,27 @@ import torch
 from PIL import Image
 from utils.tools import convert_box_xywh_to_xyxy
 
+# === Monkey‑patch Agg canvas to support tostring_rgb() ===
+import os
+os.environ['MPLBACKEND'] = 'Agg'    # ensure Agg is used
+
+import numpy as np
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+
+def _tostring_rgb(self):
+    """Return RGB bytes by calling tostring_argb and dropping alpha."""
+    buf = self.tostring_argb()
+    # get canvas size
+    width, height = self.get_width_height()
+    # reshape ARGB (4 channels) to H×W×4
+    arr = np.frombuffer(buf, dtype=np.uint8).reshape((height, width, 4))
+    # drop the alpha channel → keep RGB
+    return arr[:, :, 1:].tobytes()
+
+# Attach to the Agg canvas class
+FigureCanvasAgg.tostring_rgb = _tostring_rgb
+# ========================================================
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
